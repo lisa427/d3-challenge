@@ -6,7 +6,7 @@ var margin = {
   top: 20,
   right: 40,
   bottom: 60,
-  left: 100
+  left: 60
 };
 
 var width = svgWidth - margin.left - margin.right;
@@ -30,15 +30,13 @@ d3.csv("./assets/data/data.csv").then(function(stateData) {
       data.healthcareLow = +data.healthcareLow;
     });
 
-    var labels = stateData.map(d => d.abbr);
-
     // set up scale functions
     var xLinearScale = d3.scaleLinear()
       .domain([8, d3.max(stateData, d => d.poverty) * 1.1])
       .range([0, width]);
 
     var yLinearScale = d3.scaleLinear()
-      .domain([0, d3.max(stateData, d => d.healthcareLow) * 1.1])
+      .domain([2, d3.max(stateData, d => d.healthcareLow) * 1.1])
       .range([height, 0]);
 
     // create axis functions
@@ -80,15 +78,17 @@ d3.csv("./assets/data/data.csv").then(function(stateData) {
     // Create axes labels
     chartGroup.append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", 0 - margin.left + 40)
+      .attr("y", 0 - margin.left + 5)
       .attr("x", 0 - (height / 2))
       .attr("dy", "1em")
       .attr("class", "axisText")
+      .attr("text-anchor", "middle")
       .text("Lack of Healthcare (%)");
 
     chartGroup.append("text")
       .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
       .attr("class", "axisText")
+      .attr("text-anchor", "middle")
       .text("In Poverty (%)");
 
   }).catch(function(error) {
