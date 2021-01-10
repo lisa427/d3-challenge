@@ -30,6 +30,8 @@ d3.csv("./assets/data/data.csv").then(function(stateData) {
       data.healthcareLow = +data.healthcareLow;
     });
 
+    var labels = stateData.map(d => d.abbr);
+
     // set up scale functions
     var xLinearScale = d3.scaleLinear()
       .domain([8, d3.max(stateData, d => d.poverty) * 1.1])
@@ -59,8 +61,21 @@ d3.csv("./assets/data/data.csv").then(function(stateData) {
     .attr("cx", d => xLinearScale(d.poverty))
     .attr("cy", d => yLinearScale(d.healthcareLow))
     .attr("r", "15")
-    .attr("fill", "pink")
-    .attr("opacity", ".5");
+    .attr("fill", "blue")
+    .attr("opacity", ".75");
+
+    // create text labels
+    var textGroup = chartGroup.selectAll(null)
+    .data(stateData)
+    .enter()
+    .append("text")
+    .attr("x", d => xLinearScale(d.poverty))
+    .attr("y", d => yLinearScale(d.healthcareLow))
+    .attr("dy", "0.35em")
+    .text(d => d.abbr)
+    .attr("text-anchor", "middle")
+    .attr("fill", "white")
+    .attr("font-size", "14px");
 
     // Create axes labels
     chartGroup.append("text")
