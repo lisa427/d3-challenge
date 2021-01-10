@@ -71,9 +71,7 @@ d3.csv("./assets/data/data.csv").then(function(stateData) {
     .attr("y", d => yLinearScale(d.healthcareLow))
     .attr("dy", "0.35em")
     .text(d => d.abbr)
-    .attr("text-anchor", "middle")
-    .attr("fill", "white")
-    .attr("font-size", "14px");
+    .attr("class", "stateText");
 
     // Create axes labels
     chartGroup.append("text")
@@ -81,14 +79,12 @@ d3.csv("./assets/data/data.csv").then(function(stateData) {
       .attr("y", 0 - margin.left + 5)
       .attr("x", 0 - (height / 2))
       .attr("dy", "1em")
-      .attr("class", "axisText")
-      .attr("text-anchor", "middle")
+      .attr("class", "aText")
       .text("Lack of Healthcare (%)");
 
     chartGroup.append("text")
       .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
-      .attr("class", "axisText")
-      .attr("text-anchor", "middle")
+      .attr("class", "aText")
       .text("In Poverty (%)");
 
   }).catch(function(error) {
