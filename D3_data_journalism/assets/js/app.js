@@ -1,6 +1,6 @@
 // set up SVG dimensions
 var svgWidth = 960;
-var svgHeight = 500;
+var svgHeight = 600;
 
 var margin = {
   top: 20,
@@ -27,7 +27,7 @@ d3.csv("./assets/data/data.csv").then(function(stateData) {
     // parse data
     stateData.forEach(function(data) {
       data.poverty = +data.poverty;
-      data.healthcareLow = +data.healthcareLow;
+      data.healthcare = +data.healthcare;
     });
 
     // set up scale functions
@@ -36,7 +36,7 @@ d3.csv("./assets/data/data.csv").then(function(stateData) {
       .range([0, width]);
 
     var yLinearScale = d3.scaleLinear()
-      .domain([2, d3.max(stateData, d => d.healthcareLow) * 1.1])
+      .domain([2, d3.max(stateData, d => d.healthcare) * 1.1])
       .range([height, 0]);
 
     // create axis functions
@@ -57,7 +57,7 @@ d3.csv("./assets/data/data.csv").then(function(stateData) {
     .enter()
     .append("circle")
     .attr("cx", d => xLinearScale(d.poverty))
-    .attr("cy", d => yLinearScale(d.healthcareLow))
+    .attr("cy", d => yLinearScale(d.healthcare))
     .attr("r", "15")
     .attr("fill", "blue")
     .attr("opacity", ".75");
@@ -68,7 +68,7 @@ d3.csv("./assets/data/data.csv").then(function(stateData) {
     .enter()
     .append("text")
     .attr("x", d => xLinearScale(d.poverty))
-    .attr("y", d => yLinearScale(d.healthcareLow))
+    .attr("y", d => yLinearScale(d.healthcare))
     .attr("dy", "0.35em")
     .text(d => d.abbr)
     .attr("class", "stateText");
