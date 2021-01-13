@@ -111,8 +111,11 @@ function updateToolTip(chosenXAxis, chosenYAxis, group) {
   if (chosenXAxis === "poverty") {
     labelX = "Poverty:";
   }
-  else {
+  else if (chosenXAxis === "age") {
     labelX = "Age:";
+  }
+  else {
+    labelX = "Income:";
   }
 
   var labelY;
@@ -120,8 +123,11 @@ function updateToolTip(chosenXAxis, chosenYAxis, group) {
   if (chosenYAxis === "healthcare") {
     labelY = "Healthcare:";
   }
+  else if (chosenYAxis === "obesity") {
+    labelY = "Obese:";
+  }
   else {
-    labelY = "Obesity:";
+    labelY = "Smokes:";
   }
 
   group.on('mouseover', d => {
@@ -221,13 +227,21 @@ d3.csv("./assets/data/data.csv").then(function(stateData, err) {
     .classed("aXText", true)
     .text("Age (Median)");
 
+    var incomeLabel = xLabelsGroup.append("text")
+    .attr("x", 0)
+    .attr("y", 60)
+    .attr("value", "income") // value to grab for event listener
+    .classed("inactive", true)
+    .classed("aXText", true)
+    .text("Houshold Income (Median)");
+
   // Create group for two y-axis labels
   var yLabelsGroup = chartGroup.append("g")
 
   var healthcareLabel = yLabelsGroup.append("text")
     .attr("transform", "rotate(-90)")
     .attr("x", 0 - (height / 2))
-    .attr("y", 40 - margin.left)
+    .attr("y", 60 - margin.left)
     .attr("value", "healthcare") // value to grab for event listener
     .classed("active", true)
     .classed("aYText", true)
@@ -236,11 +250,20 @@ d3.csv("./assets/data/data.csv").then(function(stateData, err) {
   var obesityLabel = yLabelsGroup.append("text")
     .attr("transform", "rotate(-90)")
     .attr("x", 0 - (height / 2))
-    .attr("y", 20 - margin.left)
+    .attr("y", 40 - margin.left)
     .attr("value", "obesity") // value to grab for event listener
     .classed("inactive", true)
     .classed("aYText", true)
-    .text("Obesity (%)");
+    .text("Obese (%)");
+
+    var smokesLabel = yLabelsGroup.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("x", 0 - (height / 2))
+    .attr("y", 20 - margin.left)
+    .attr("value", "smokes") // value to grab for event listener
+    .classed("inactive", true)
+    .classed("aYText", true)
+    .text("Smokes (%)");
 
 
 
@@ -284,15 +307,32 @@ d3.csv("./assets/data/data.csv").then(function(stateData, err) {
           povertyLabel
             .classed("active", false)
             .classed("inactive", true);
+          incomeLabel
+            .classed("active", false)
+            .classed("inactive", true);        
         }
-        else {
+        else if (chosenXAxis === "poverty") {
           ageLabel
             .classed("active", false)
             .classed("inactive", true);
           povertyLabel
             .classed("active", true)
             .classed("inactive", false);
+          incomeLabel
+            .classed("active", false)
+            .classed("inactive", true);
         }
+        else {
+          ageLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          povertyLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          incomeLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          }
       }
     });
 
@@ -332,15 +372,32 @@ d3.csv("./assets/data/data.csv").then(function(stateData, err) {
         obesityLabel
           .classed("active", false)
           .classed("inactive", true);
+        smokesLabel
+          .classed("active", false)
+          .classed("inactive", true);
       }
-      else {
+      else if (chosenYAxis === "obesity") {
         healthcareLabel
           .classed("active", false)
           .classed("inactive", true);
         obesityLabel
           .classed("active", true)
           .classed("inactive", false);
+        smokesLabel
+          .classed("active", false)
+          .classed("inactive", true);
       }
+      else {
+        healthcareLabel
+          .classed("active", false)
+          .classed("inactive", true);
+        obesityLabel
+          .classed("active", false)
+          .classed("inactive", true);
+        smokesLabel
+          .classed("active", true)
+          .classed("inactive", false);
+        }
     }
   });
 
