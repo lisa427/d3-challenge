@@ -36,11 +36,13 @@
 }
 
 .chart {
+  position: absolute;
   display: block;
   margin: 0;
 }
 
 .d3-tip {
+  position: absolute;
   padding: 6px;
   font-size: 12px;
   line-height: 1;

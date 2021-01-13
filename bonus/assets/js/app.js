@@ -23,18 +23,19 @@ var chartGroup = svg.append("g")
 
 // Initial Params
 var chosenXAxis = "poverty";
+
 //var chosenYAxis = 
 
 // function used for updating x-scale var upon click on axis label
 function xScale(stateData, chosenXAxis) {
   // create scales
   var xLinearScale = d3.scaleLinear()
-    .domain([d3.min(stateData, d => d[chosenXAxis]) * 0.8,
-      d3.max(stateData, d => d[chosenXAxis]) * 1.2
+    .domain([d3.min(stateData, d => d[chosenXAxis]) * 0.9,
+      d3.max(stateData, d => d[chosenXAxis]) * 1.1
     ])
     .range([0, width]);
-    console.log(d3.min(stateData, d => d[chosenXAxis]) * 0.8);
-    console.log(d3.max(stateData, d => d[chosenXAxis]) * 1.2);
+    console.log(d3.min(stateData, d => d[chosenXAxis]));
+    console.log(d3.max(stateData, d => d[chosenXAxis]));
 
   return xLinearScale;
 
@@ -113,7 +114,7 @@ d3.csv("./assets/data/data.csv").then(function(stateData, err) {
 
   // Create y scale function
   var yLinearScale = d3.scaleLinear()
-    .domain([0, d3.max(stateData, d => d.healthcare)])
+    .domain([0, d3.max(stateData, d => d.healthcare) * 1.1])
     .range([height, 0]);
 
   // Create initial axis functions
@@ -150,6 +151,7 @@ d3.csv("./assets/data/data.csv").then(function(stateData, err) {
     .attr("y", 20)
     .attr("value", "poverty") // value to grab for event listener
     .classed("active", true)
+    .classed("aText", true)
     .text("Poverty (%)");
 
   var ageLabel = labelsGroup.append("text")
@@ -157,6 +159,7 @@ d3.csv("./assets/data/data.csv").then(function(stateData, err) {
     .attr("y", 40)
     .attr("value", "age") // value to grab for event listener
     .classed("inactive", true)
+    .classed("aText", true)
     .text("Age (Median)");
 
   // append y axis
@@ -165,7 +168,8 @@ d3.csv("./assets/data/data.csv").then(function(stateData, err) {
     .attr("y", 0 - margin.left)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
-    .classed("axis-text", true)
+    .classed("aText", true)
+    .classed("active", true)
     .text("Lacks Healthcare (%)");
 
   // updateToolTip function above csv import
