@@ -207,7 +207,7 @@ d3.csv("./assets/data/data.csv").then(function(stateData, err) {
   .text(d => d.abbr)
   .attr("class", "stateText");
 
-  // Create group for two x-axis labels
+  // Create group for three x-axis labels
   var xLabelsGroup = chartGroup.append("g")
     .attr("transform", `translate(${width / 2}, ${height + 20})`);
 
@@ -235,7 +235,7 @@ d3.csv("./assets/data/data.csv").then(function(stateData, err) {
     .classed("aXText", true)
     .text("Houshold Income (Median)");
 
-  // Create group for two y-axis labels
+  // Create group for three y-axis labels
   var yLabelsGroup = chartGroup.append("g")
 
   var healthcareLabel = yLabelsGroup.append("text")
@@ -344,7 +344,7 @@ d3.csv("./assets/data/data.csv").then(function(stateData, err) {
 
     if (yvalue !== chosenYAxis) {
 
-      // replaces chosenXAxis with value
+      // replaces chosenYAxis with value
       chosenYAxis = yvalue;
           
       // functions here found above csv import
